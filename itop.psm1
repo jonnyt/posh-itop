@@ -1,7 +1,6 @@
 <#
 
-Requires MySql libraries to be imported first, see posh-mysql.
-Function GenerateAndSendRequest does all the work.
+Requires MySql libraries to be imported first, see posh-mysql
 
 #>
 
@@ -73,7 +72,6 @@ Function Get-iTopLocation
     Get-iTopObject -objectClass 'Location' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
 
-
 Function Get-SynchroDataSource
 {
 <#
@@ -108,7 +106,6 @@ Function Get-SynchroDataSource
     )
     Get-iTopObject -objectClass 'SynchroDataSource' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
-
 
 Function Get-FunctionalCI
 {
@@ -1668,60 +1665,6 @@ Function Invoke-SyncScript
     $command = 'php -q ' + $ITOP_sync_exe_path + ' --auth_user=' + $ITOP_authName + ' --auth_pwd=' + $ITOP_authPwd + ' --data_sources=' + $datasourceObject.key
     $sshRes = Invoke-SshCommand -ComputerName $ITOP_server_name -Command $command
     $sshRes
-}
-
-Function InsertObjectIntoSynchroDataSource
-{
-<# work in progress to create a generic data source updater #>
-    Param(
-        [Parameter(Mandatory=$True)][object]$itopObject,
-        [Parameter(Mandatory=$True)][object]$datasourceObject,
-        [Parameter(Mandatory=$True)][string]$ITOP_DB_Server,
-        [Parameter(Mandatory=$True)][string]$ITOP_DB_authName,
-        [Parameter(Mandatory=$True)][string]$ITOP_DB_authPwd,
-        [Parameter(Mandatory=$True)][string]$ITOP_DB_Name,
-        [Parameter(Mandatory=$True)][string]$ITOP_SYNC_TableName,
-        [Parameter(Mandatory=$True)][string]$primaryKeyField
-    )
-
-
-    #TODO, read the columns from the source datasource, then use those to build our statment, duh!
-    $source = Get-SynchroDataSource -authName $
-
-
-    $updatePart = "INSERT INTO $ITOP_SYNC_TableName ("
-    $valuesPart = "VALUES ("
-    $onDupePart = "ON DUPLICATE KEY UPDATE "
-
-    $itopObject | Get-Member | Where {$_.MemberType -eq "NoteProperty"} | Select -Property Name | % {
-        $thisProp = $_.Name
-        if(![String]::IsNullOrEmpty($itopObject.$thisProp))
-        {
-            $updatePart += $_.Name + ','
-            $valuesPart += "`'$($itopObject.$thisProp)`',"
-            $onDupePart += "$thisProp=VALUES($thisProp),"
-        }
-    }
-
-    $updatePart += 'primary_key'
-    $valuesPart += $itopObject.$primaryKeyField
-    $onDupePart = $onDupePart.Substring(0,$onDupePart.Length -1)
-    $updateStatement = $updatePart + $valuesPart + $onDupePart
-
-    # add the primary_key part
-
-    <#
-    
-                # Update VM synchro data
-                $updateStatement = "INSERT INTO $synchroTableName (primary_key,volume_id,virtualdevice_id,size_used) 
-                                    VALUES (`'$primary_key`',`'$volume_id`',`'$virtualdevice_id`',$size_used) 
-                                    ON DUPLICATE KEY UPDATE 
-                                        volume_id=VALUES(volume_id),
-                                        virtualdevice_id=VALUES(virtualdevice_id),
-                                        size_used=VALUES(size_used)"
-
-                $res = Invoke-NonQuery -serverName $ITOP_DB_Server -userName $ITOP_DB_authName -password $ITOP_DB_authPwd -dbName $ITOP_DB_Name -query $updateStatement
-    #>
 }
 
 Function GenerateAndSendRequest
