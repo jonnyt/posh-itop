@@ -1460,8 +1460,6 @@ Function New-Software
     {
         $thisSoftware
     }
-
-
 }
 
 Function Get-Service
@@ -1520,8 +1518,6 @@ Function New-VirtualMachineReplica
     $res = Invoke-NonQuery -serverName $ITOP_DB_Server -userName $ITOP_DB_authName -password $ITOP_DB_authPwd -dbName $ITOP_DB_Name -query $updateStatement
     $res
 }
-
-<### HELPERS ###>
 
 Function Get-iTopObject
 {
