@@ -1,6 +1,7 @@
 <#
 
-Requires MySql libraries to be imported first, see posh-mysql
+Requires MySql libraries to be imported first, see posh-mysql.
+Function GenerateAndSendRequest does all the work.
 
 #>
 
