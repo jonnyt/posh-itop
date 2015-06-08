@@ -9,9 +9,7 @@ Requirements:
 - iTop version 2.0.2 (REST API 1.1)
 
 Usage:
-Import-Module MySQL.psm1
 Import-Module iTop.psm1
-
 
 Notes:
 
