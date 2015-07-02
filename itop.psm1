@@ -214,7 +214,6 @@ Function Get-Rack
     Get-iTopObject -objectClass 'Rack' -ouputFields '*' -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-
 Function Get-StorageSystem
 {
 <#
@@ -352,7 +351,6 @@ Function Get-Model
     Get-iTopObject -objectClass 'Model' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
 
-
 Function Get-OSVersion
 {
 <#
@@ -416,7 +414,6 @@ Function Get-OSFamily
 
     Get-iTopObject -objectClass 'OSFamily' -ouputFields '*' -uri $uri -credentials $credentials
 }
-
 
 Function Get-Server
 {
@@ -703,6 +700,41 @@ Function Get-CustomerContract
     Get-iTopObject -objectClass 'CustomerContract' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
+
+Function Get-ProviderContract
+{
+    <#
+     .Synopsis
+      Get a provider contract or collection of contracts
+
+     .Description
+      Get a provider contract or collection of contracts
+
+     .Parameter authName
+      Logon for the iTop web service
+
+     .Parameter authPwd
+      Password for the iTop web service
+
+     .Parameter uri
+      uri for the iTop web service
+
+     .Example
+       Get-ProviderContract -authName 'user' -authPwd 'password' -uri 'https://webservice.edu'
+     
+     .Example
+       Get-ProviderContract -authName 'user' -authPwd 'password' -uri 'https://webservice.edu' | Where {$_.cost_unit -eq '1-66083-26328-43'}
+
+    #>
+    Param(
+        [Parameter(Mandatory=$False)][string]$oqlFilter,        
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+
+    Get-iTopObject -objectClass 'ProviderContract' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
+}
 
 Function Get-LinkServiceToSLA
 {
@@ -1047,7 +1079,6 @@ Function New-Person
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-
 Function New-VirtualMachine
 {
 <#
@@ -1192,7 +1223,6 @@ Function Remove-iTopObject
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-
 Function Set-Team
 {
     Param(
@@ -1228,7 +1258,6 @@ Function Set-Team
     Set-iTopObject -credentials $credentials -uri $uri -iTopObject $team -propertyBag $propertyBag
 
 }
-
 
 Function Set-iTopObject
 {
@@ -1266,7 +1295,6 @@ Function Set-iTopObject
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
  
 }
-
 
 Function Set-FunctionalCI
 {
@@ -1338,7 +1366,6 @@ Function Set-FunctionalCI
     }
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
-
 
 Function Set-CustomerContract
 {
