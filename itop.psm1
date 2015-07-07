@@ -317,6 +317,43 @@ Function Get-Brand
     Get-iTopObject -objectClass 'Brand' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
 
+
+Function Get-ContractType
+{
+<#
+    .Synopsis
+    Get a contract typology or collection of contract types
+
+    .Description
+    Get a contract typology or collection of contract types
+
+    .Parameter authName
+    Logon for the iTop web service
+
+    .Parameter authPwd
+    Password for the iTop web service
+
+    .Parameter uri
+    uri for the iTop web service
+
+    .Example
+    Get-ContractType -authName 'user' -authPwd 'password' -uri 'https://webservice.edu'
+
+    .Example
+    Get-ContractType -authName 'user' -authPwd 'password' -uri 'https://webservice.edu' | Where {$_.Name -eq 'Blade'}
+#>
+
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+
+    Get-iTopObject -objectClass 'ContractType' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
+}
+
+
 Function Get-Model
 {
 <#
