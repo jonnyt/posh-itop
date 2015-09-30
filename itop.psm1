@@ -317,6 +317,41 @@ Function Get-Brand
     Get-iTopObject -objectClass 'Brand' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
 
+Function Get-ContactType
+{
+<#
+    .Synopsis
+    Get a contact type typology or collection of brands
+
+    .Description
+    Get a contact type typology or collection of brands
+
+    .Parameter authName
+    Logon for the iTop web service
+
+    .Parameter authPwd
+    Password for the iTop web service
+
+    .Parameter uri
+    uri for the iTop web service
+
+    .Example
+    Get-ContactType -authName 'user' -authPwd 'password' -uri 'https://webservice.edu'
+
+    .Example
+    Get-ContactType -authName 'user' -authPwd 'password' -uri 'https://webservice.edu' | Where {$_.Name -eq 'Functional Owner'}
+#>
+
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+
+    Get-iTopObject -objectClass 'ContactType' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
+}
+
 
 Function Get-ContractType
 {
@@ -903,6 +938,27 @@ Function New-Brand
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
+Function New-ContactType
+{
+    Param(
+        [Parameter(Mandatory=$True)][string]$name,
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri
+    )
+    $fields = New-Object PSObject -Property @{
+        name = $name
+    }
+    
+    $operation = New-Object PSObject -Property @{ 
+        operation = 'core/create'
+        class = 'ContactType'
+        comment = 'Synchronization from load scripts'
+        output_fields = '*'
+        fields = $fields
+    }
+    GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
+}
+
 Function New-Model
 {
     Param(
@@ -1036,35 +1092,14 @@ Function New-Team
         [Parameter(Mandatory=$True)][string]$name,
         [Parameter(Mandatory=$False)][string]$email = $null,
         [Parameter(Mandatory=$False)][string]$phone = $null,
-        [Parameter(Mandatory=$False)][PSCustomObject]$persons = $null,
-        [Parameter(Mandatory=$False)][PSCustomObject]$functionalcis = $null,
         [Parameter(Mandatory=$True)][string]$orgName,
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri
     )
 
-    $persons_list = @()
-    foreach($person in $persons)
-    {
-        $personHash = @{}
-        $personHash.add("person_id",("SELECT Contact WHERE id =`"$($person.key)`""))
-        $persons_list += $personHash
-    }
-
-    $cis_list = @()
-    foreach($ci in $functionalcis)
-    {
-        $ciHash = @{}
-        $ciHash.add("functionalci_id",("SELECT FunctionalCI WHERE id =`"$($ci.key)`""))
-        $cis_list += $ciHash
-    }
-
     $fields = New-Object PSObject -Property @{
         org_id = "SELECT Organization WHERE name = `"$orgName`""
         name = $name
-    
-        cis_list = $cis_list
-        persons_list = $persons_list
     }
 
     # add optional parameters
@@ -1266,30 +1301,32 @@ Function Set-Team
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
         [Parameter(Mandatory=$True)]$team,
-        [Parameter(Mandatory=$False)]$linkedPersons=$null,
-        [Parameter(Mandatory=$False)]$linkedCIs=$null,
+        [Parameter(Mandatory=$False)][hashtable]$PersonRoles=$null,
+        [Parameter(Mandatory=$False)]$CIs=$null,
         [Parameter(Mandatory=$False)]$orgId=$null
     )
-
+    
     #This is the way we might want to start moving all Set functions to
 
     # Create a hash table to store all of the fields
     $propertyBag = @{}
 
-    if($linkedPersons -ne $nul)
+    if($PersonRoles -ne $nul)
     {
         $personsList = @()
-        foreach($person in $linkedPersons)
+        foreach($person in $PersonRoles.Keys)
         {
+            $role = $PersonRoles.$person
             $personHash = @{}
-            $personHash.Add('person_id',("SELECT Contact WHERE id = `"$($person.contact_id)`""))
+            $personHash.Add('person_id',("SELECT Contact WHERE id = `"$($person.key)`""))
+            $personHash.Add('role_id',("SELECT ContactType WHERE name = `"$($role.name)`""))
             $personsList += $personHash
         }
         $propertyBag.Add('persons_list',$personsList)
     }
-    if($linkedCIs -ne $null)
+    if($CIs -ne $null)
     {
-        $propertyBag.Add('cis_list',$linkedCIs)
+        $propertyBag.Add('cis_list',$CIs)
     }
 
     Set-iTopObject -credentials $credentials -uri $uri -iTopObject $team -propertyBag $propertyBag
