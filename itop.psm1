@@ -352,7 +352,6 @@ Function Get-ContactType
     Get-iTopObject -objectClass 'ContactType' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
 
-
 Function Get-ContractType
 {
 <#
@@ -387,7 +386,6 @@ Function Get-ContractType
 
     Get-iTopObject -objectClass 'ContractType' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
-
 
 Function Get-Model
 {
@@ -699,7 +697,6 @@ Function Get-Contact
     Get-iTopObject -objectClass 'Contact' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
 }
 
-
 Function Get-Team
 {
     <#
@@ -730,6 +727,18 @@ Function Get-Team
     )
 
     Get-iTopObject -objectClass 'Team' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
+}
+
+Function Get-iTopGroup
+{
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+
+    Get-iTopObject -objectClass 'Group' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
 Function Get-Person
@@ -804,7 +813,6 @@ Function Get-CustomerContract
 
     Get-iTopObject -objectClass 'CustomerContract' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
-
 
 Function Get-ProviderContract
 {
