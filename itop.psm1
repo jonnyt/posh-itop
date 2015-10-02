@@ -1351,7 +1351,20 @@ Function Set-Team
         {
             $role = $PersonRoles.$person
             $personHash = @{}
-            $personHash.Add('person_id',("SELECT Contact WHERE id = `"$($person.key)`""))
+
+            if($person.key -ne $null)
+            {
+                $personHash.Add('person_id',("SELECT Contact WHERE id = `"$($person.key)`""))
+            }
+            elseif($person.contact_id -ne $null)
+            {
+                $personHash.add("person_id",("SELECT Contact WHERE id = `"$($person.contact_id)`""))
+            }
+            elseif($contact.person_id -ne $null)
+            {
+                $personHash.add("person_id",("SELECT Contact WHERE id = `"$($person.person_id)`""))
+            }
+            
             $personHash.Add('role_id',("SELECT ContactType WHERE name = `"$($role.name)`""))
             $personsList += $personHash
         }
