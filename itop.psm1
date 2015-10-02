@@ -1,12 +1,12 @@
 <#
 
-Requires MySql libraries to be imported first, see posh-mysql
+Requires MySql libraries to be imported first when using the Data Synchro functions, see posh-mysql
 
 #>
 
 Function Get-Software
 {
-<#
+    <#
     .Synopsis
     Find software
 
@@ -35,8 +35,10 @@ Function Get-Software
         [Parameter(Mandatory=$False)][string]$oqlFilter,
         [Parameter(Mandatory=$False)][string]$outputFields='*'
     )
+    Write-Warning ("Function name {0} is deprecated.  Use {1} instead." -f $MyInvocation.MyCommand,"$($MyInvocation.MyCommand.Name -replace '-','-iTop')")
     Get-iTopObject -objectClass 'Software' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
+New-Alias -Name Get-iTopSoftware -Value Get-Software -Force
 
 Function Get-iTopLocation
 {
@@ -104,8 +106,10 @@ Function Get-SynchroDataSource
         [Parameter(Mandatory=$False)][string]$oqlFilter,
         [Parameter(Mandatory=$False)][string]$outputFields='*'
     )
+    Write-Warning ("Function name {0} is deprecated.  Use {1} instead." -f $MyInvocation.MyCommand,"$($MyInvocation.MyCommand.Name -replace '-','-iTop')")
     Get-iTopObject -objectClass 'SynchroDataSource' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
+New-Alias -Name Get-iTopSynchroDataSource -Value Get-SynchroDataSource -Force
 
 Function Get-FunctionalCI
 {
@@ -139,9 +143,10 @@ Function Get-FunctionalCI
         [Parameter(Mandatory=$False)][string]$oqlFilter,
         [Parameter(Mandatory=$False)][string]$outputFields='*'
     )
-
+    Write-Warning ("Function name {0} is deprecated.  Use {1} instead." -f $MyInvocation.MyCommand,"Get-iTopCI")
     Get-iTopObject -objectClass 'FunctionalCI' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
+New-Alias -Name Get-iTopCI -Value Get-FunctionalCI -Force
 
 Function Get-Enclosure
 {
@@ -1901,4 +1906,4 @@ Function GenerateAndSendRequest
     }
 }
 
-Export-ModuleMember -Function *
+Export-ModuleMember -Function * -Alias *
