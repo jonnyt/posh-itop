@@ -699,6 +699,39 @@ Function Get-Contact
     Get-iTopObject -objectClass 'Contact' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
 }
 
+
+Function Get-Team
+{
+    <#
+     .Synopsis
+      Get a team or collection of teams
+
+     .Description
+      Get a team or collection of teams
+
+     .Parameter authName
+      Logon for the iTop web service
+
+     .Parameter authPwd
+      Password for the iTop web service
+
+     .Parameter uri
+      uri for the iTop web service
+
+     .Example
+       Get-Team -authName 'user' -authPwd 'password' -uri 'https://webservice.edu'
+
+    #>
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+
+    Get-iTopObject -objectClass 'Team' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
+}
+
 Function Get-Person
 {
     <#
@@ -1469,6 +1502,10 @@ Function Set-CustomerContract
         elseif($contact.contact_id -ne $null)
         {
             $contactHash.add("contact_id",("SELECT Contact WHERE id = `"$($contact.contact_id)`""))
+        }
+        elseif($contact.person_id -ne $null)
+        {
+            $contactHash.add("contact_id",("SELECT Contact WHERE id = `"$($contact.person_id)`""))
         }
         $contacts_list += $contactHash
     }
