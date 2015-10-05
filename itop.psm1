@@ -356,6 +356,8 @@ Function Get-ContactType
 
     Get-iTopObject -objectClass 'ContactType' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
+New-Alias -Name Get-iTopContactType -Value Get-ContactType -Force
+New-Alias -Name Get-iTopRole -Value Get-ContactType -Force
 
 Function Get-ContractType
 {
@@ -1373,13 +1375,30 @@ Function Set-Team
             {
                 $personHash.add("person_id",("SELECT Contact WHERE id = `"$($person.contact_id)`""))
             }
-            elseif($contact.person_id -ne $null)
+            elseif($person.person_id -ne $null)
             {
                 $personHash.add("person_id",("SELECT Contact WHERE id = `"$($person.person_id)`""))
             }
             
-            $personHash.Add('role_id',("SELECT ContactType WHERE name = `"$($role.name)`""))
-            $personsList += $personHash
+            if($role -ne $null)
+            {
+                $personHash.Add('role_id',("SELECT ContactType WHERE name = `"$($role.name)`""))
+            }
+
+            # Add to the array only if not already there
+            $alreadyAdded = $false
+            foreach($existingPersonHash in $personsList)
+            {
+                if(($existingPersonHash.'person_id' -eq $personHash.'person_id') -and ($existingPersonHash.'role_id' -eq $personHash.'role_id'))
+                {
+                    $alreadyAdded = $true
+                    break
+                }
+            }
+            if(!$alreadyAdded)
+            {
+                $personsList += $personHash
+            }
         }
         $propertyBag.Add('persons_list',$personsList)
     }
