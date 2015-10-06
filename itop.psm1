@@ -1141,6 +1141,7 @@ Function New-Team
         [Parameter(Mandatory=$False)][string]$email = $null,
         [Parameter(Mandatory=$False)][string]$phone = $null,
         [Parameter(Mandatory=$True)][string]$orgName,
+        [Parameter(Mandatory=$False)][string]$function,
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri
     )
@@ -1158,6 +1159,10 @@ Function New-Team
     if(![String]::IsNullOrEmpty($email))
     {
         $fields | Add-Member -NotePropertyName 'email' -NotePropertyValue $email
+    }
+        if(![String]::IsNullOrEmpty($function))
+    {
+        $fields | Add-Member -NotePropertyName 'function' -NotePropertyValue $function
     }
 
     New-iTopObject -objectClass 'Team' -fields $fields -credentials $credentials -uri $uri
