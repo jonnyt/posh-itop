@@ -1441,9 +1441,19 @@ Function Set-iTopObject
         }
     }
 
+    $class = $null
+    if(![string]::IsNullOrEmpty($iTopObject.finalclass))
+    {
+        $class = $iTopObject.finalclass
+    }
+    elseif(![string]::IsNullOrEmpty($iTopObject.class))
+    {
+        $class = $iTopObject.class
+    }
+
     $operation = New-Object PSObject -Property @{ 
         operation = 'core/update'
-        class = $iTopObject.finalclass
+        class = $class
         key = $iTopObject.key
         comment = 'update from API'
         output_fields = '*'
