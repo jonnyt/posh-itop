@@ -40,6 +40,42 @@ Function Get-Software
 }
 New-Alias -Name Get-iTopSoftware -Value Get-Software -Force
 
+
+Function Get-iTopGlobalIPSetting
+{
+<#
+    .Synopsis
+    Find Global IP Settings (IPConfig)
+
+    .Description
+    Find global IP settings
+
+    .Parameter authName
+    Logon for the iTop web service
+
+    .Parameter authPwd
+    Password for the iTop web service
+
+    .Parameter uri
+    uri for the iTop web service
+
+    .Example
+    Get-Software -authName 'user' -authPwd 'password' -uri 'https://webservice.edu'
+
+    .Example
+    Get-Software -authName 'user' -authPwd 'password' -uri 'https://webservice.edu' -oqlFilter "WHERE name = 'MySQL'"
+
+#>
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+    Get-iTopObject -objectClass 'IPConfig' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
+}
+
+
 Function Get-iTopLocation
 {
 <#
@@ -1415,6 +1451,32 @@ Function Set-Team
     Set-iTopObject -credentials $credentials -uri $uri -iTopObject $team -propertyBag $propertyBag
 
 }
+
+Function Set-iTopGlobalIPSetting {
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$True)]$globalIPSetting,
+        [Parameter(Mandatory=$False)][int]$ipv4BlockMinSize,
+        [Parameter(Mandatory=$False)][ValidateSet('dtc_no','dtc_yes')][string]$delegateToChildrenOnly='dtc_no',
+        [Parameter(Mandatory=$False)][ValidateSet('reserve_no','reserve_yes')][string]$reserveSubnetIPs='dtc_yes'
+    )
+    
+    $propertyBag = @{}
+
+    if($PSBoundParameters.ContainsKey('ipv4BlockMinSize')) {
+        $propertyBag.Add('ipv4_block_min_size',$ipv4BlockMinSize)
+    }
+    if($PSBoundParameters.ContainsKey('delegateToChildrenOnly')) {
+        $propertyBag.Add('delegate_to_children_only',$delegateToChildrenOnly)
+    }
+    if($PSBoundParameters.ContainsKey('reserveSubnetIPs')) {
+        $propertyBag.Add('reserve_subnet_IPs',$reserveSubnetIPs)
+    }
+
+    Set-iTopObject -credentials $credentials -uri $uri -iTopObject $globalIPSetting -propertyBag $propertyBag
+}
+
 
 Function Set-iTopObject
 {
