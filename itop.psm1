@@ -50,11 +50,8 @@ Function Get-iTopGlobalIPSetting
     .Description
     Find global IP settings
 
-    .Parameter authName
-    Logon for the iTop web service
-
-    .Parameter authPwd
-    Password for the iTop web service
+    .Parameter credentials
+    PSCredential used for authentication
 
     .Parameter uri
     uri for the iTop web service
@@ -75,6 +72,46 @@ Function Get-iTopGlobalIPSetting
     Get-iTopObject -objectClass 'IPConfig' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
 
+Function Get-iTopDomain {
+        Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+    Get-iTopObject -objectClass 'Domain' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
+}
+
+Function Get-iTopIPUsage
+{
+<#
+    .Synopsis
+    Find Global IP Settings (IPConfig)
+
+    .Description
+    Find global IP settings
+
+    .Parameter credentials
+    PSCredential used for authentication
+
+    .Parameter uri
+    uri for the iTop web service
+
+    .Example
+    Get-Software -authName 'user' -authPwd 'password' -uri 'https://webservice.edu'
+
+    .Example
+    Get-Software -authName 'user' -authPwd 'password' -uri 'https://webservice.edu' -oqlFilter "WHERE name = 'MySQL'"
+
+#>
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+    Get-iTopObject -objectClass 'IPUsage' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
+}
 
 Function Get-iTopLocation
 {
@@ -85,11 +122,8 @@ Function Get-iTopLocation
     .Description
     Find software
 
-    .Parameter authName
-    Logon for the iTop web service
-
-    .Parameter authPwd
-    Password for the iTop web service
+    .Parameter credentials
+    PSCredential used for authentication
 
     .Parameter uri
     uri for the iTop web service
@@ -193,11 +227,8 @@ Function Get-Enclosure
     .Description
     Get an enclosure or collection of enclosures
 
-    .Parameter authName
-    Logon for the iTop web service
-
-    .Parameter authPwd
-    Password for the iTop web service
+    .Parameter credentials
+    PSCredential used for authentication
 
     .Parameter uri
     uri for the iTop web service
@@ -227,11 +258,8 @@ Function Get-Rack
     .Description
     Get rack or collection of racks
 
-    .Parameter authName
-    Logon for the iTop web service
-
-    .Parameter authPwd
-    Password for the iTop web service
+    .Parameter credentials
+    PSCredential used for authentication
 
     .Parameter uri
     uri for the iTop web service
@@ -264,11 +292,8 @@ Function Get-StorageSystem
     .Description
     Get an enclosure or collection of storage systems
 
-    .Parameter authName
-    Logon for the iTop web service
-
-    .Parameter authPwd
-    Password for the iTop web service
+    .Parameter credentials
+    PSCredential used for authentication
 
     .Parameter uri
     uri for the iTop web service
@@ -289,6 +314,37 @@ Function Get-StorageSystem
     Get-iTopObject -objectClass 'StorageSystem' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
 
+Function Get-iTopLogicalInterface
+{
+<#
+    .Synopsis
+    Get an logial interface or collection of logical interfaces
+
+    .Description
+    Get an logial interface or collection of logical interfaces
+
+    .Parameter credentials
+    PSCredential used for authentication
+
+    .Parameter uri
+    uri for the iTop web service
+
+    .Example
+    Get-iTopLogicalInterface -authName 'user' -authPwd 'password' -uri 'https://webservice.edu'
+
+    .Example
+    Get-iTopLogicalInterface -authName 'user' -authPwd 'password' -uri 'https://webservice.edu' | Where {$_.macaddress -eq '00:00:00:00:00:00'}
+#>
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+
+    Get-iTopObject -objectClass 'LogicalInterface' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
+}
+
 Function Get-LogicalVolume
 {
 <#
@@ -298,11 +354,8 @@ Function Get-LogicalVolume
     .Description
     Get an enclosure or collection of logical volumes
 
-    .Parameter authName
-    Logon for the iTop web service
-
-    .Parameter authPwd
-    Password for the iTop web service
+    .Parameter credentials
+    PSCredential used for authentication
 
     .Parameter uri
     uri for the iTop web service
@@ -332,11 +385,8 @@ Function Get-Brand
     .Description
     Get a brand typology or collection of brands
 
-    .Parameter authName
-    Logon for the iTop web service
-
-    .Parameter authPwd
-    Password for the iTop web service
+    .Parameter credentials
+    PSCredential used for authentication
 
     .Parameter uri
     uri for the iTop web service
@@ -505,11 +555,8 @@ Function Get-OSFamily
     .Description
     Get an OS Family typology or collection of OS Families
 
-    .Parameter authName
-    Logon for the iTop web service
-
-    .Parameter authPwd
-    Password for the iTop web service
+    .Parameter credentials
+    PSCredential used for authentication
 
     .Parameter uri
     uri for the iTop web service
@@ -540,11 +587,8 @@ Function Get-Server
  .Parameter name
   Optional, otherwise returns collection
 
- .Parameter authName
-  Logon for the iTop web service
-
- .Parameter authPwd
-  Password for the iTop web service
+ .Parameter credentials
+  PSCredential used for authentication
 
  .Parameter uri
   uri for the iTop web service
@@ -784,6 +828,118 @@ Function Get-iTopGroup
     Get-iTopObject -objectClass 'Group' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
+Function Get-iTopIPv4Address {
+    <#
+     .Synopsis
+      Get a IPv4 address or collection of addresses
+
+     .Description
+      Get a IPv4 address or collection of addresses
+
+     .Parameter uri
+      uri for the iTop web service
+
+     .Example
+       Get-iTopIPv4Address -credentials $cred -uri 'https://webservice.edu'
+     
+     .Example
+       Get-iTopIPv4Address -credentials $cred -uri 'https://webservice.edu' -oqlFilter "WHERE status='Allocated'"
+
+    #>
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+
+    Get-iTopObject -objectClass 'IPv4Address' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
+}
+
+Function Get-iTopIPv4Block {
+    <#
+     .Synopsis
+      Get a IPv4 block or collection of blocks
+
+     .Description
+      Get a IPv4 block or collection of blocks
+
+     .Parameter uri
+      uri for the iTop web service
+
+     .Example
+       Get-iTopIPv4Block -credentials $cred -uri 'https://webservice.edu'
+     
+     .Example
+       Get-iTopIPv4Block -credentials $cred -uri 'https://webservice.edu' -oqlFilter "WHERE status='Allocated'"
+
+    #>
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+
+    Get-iTopObject -objectClass 'IPv4Block' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
+}
+
+Function Get-iTopIPv4Subnet {
+    <#
+     .Synopsis
+      Get a IPv4 subnets or collection of subnets
+
+     .Description
+      Get a IPv4 subnets or collection of subnets
+
+     .Parameter uri
+      uri for the iTop web service
+
+     .Example
+       Get-iTopIPv4Subnet -credentials $cred -uri 'https://webservice.edu'
+     
+     .Example
+       Get-iTopIPv4Subnet -credentials $cred -uri 'https://webservice.edu' -oqlFilter "WHERE ip='127.0.0.0'"
+
+    #>
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+
+    Get-iTopObject -objectClass 'IPv4Subnet' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
+}
+
+Function Get-iTopVlan {
+    <#
+     .Synopsis
+      Get a VLAN or collection of VLANS
+
+     .Description
+      Get a VLAN subnets or collection of VLANS
+
+     .Parameter uri
+      uri for the iTop web service
+
+     .Example
+       Get-iTopVlan -credentials $cred -uri 'https://webservice.edu'
+     
+     .Example
+       Get-iTopVlan -credentials $cred -uri 'https://webservice.edu' -oqlFilter "WHERE vlan_tag='4012'"
+
+    #>
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+
+    Get-iTopObject -objectClass 'VLAN' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
+}
+
 Function Get-Person
 {
     <#
@@ -796,11 +952,8 @@ Function Get-Person
      .Parameter employeeNumber
       Employee number, currently same as UID
 
-     .Parameter authName
-      Logon for the iTop web service
-
-     .Parameter authPwd
-      Password for the iTop web service
+     .Parameter credentials
+      PSCredential used for authentication
 
      .Parameter uri
       uri for the iTop web service
@@ -1671,9 +1824,21 @@ Function Set-CustomerContract
         $propertyBag.Add('services_list',$services_list)
     }
 
-
     Set-iTopObject -credentials $credentials -uri $uri -iTopObject $customerContract -propertyBag $propertyBag
+}
 
+Function New-iTopDomain {
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$True)][string]$name,
+        [Parameter(Mandatory=$True)]$orgId
+    )
+
+    $fields = New-Object PSObject -Property @{
+        name = $name;org_id = "SELECT Organization WHERE id = `"$orgId`""
+    }
+    New-iTopObject -objectClass 'Domain' -fields  $fields -credentials $credentials -uri $uri
 }
 
 Function New-Software
