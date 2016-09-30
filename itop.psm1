@@ -1786,7 +1786,7 @@ Function Set-CustomerContract
     }
 
     $functionalcis_list = @()
-    foreach($functionalCI in $functionalCIs)
+    foreach($functionalCI in $functionalCIs | ? {$_ -ne $null})
     {
         $functionalciHash = @{}
         $functionalciHash.add("functionalci_id",("SELECT FunctionalCI WHERE id = `"$($functionalCI.key)`""))
