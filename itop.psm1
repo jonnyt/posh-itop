@@ -1612,7 +1612,8 @@ Function Set-iTopGlobalIPSetting {
         [Parameter(Mandatory=$True)]$globalIPSetting,
         [Parameter(Mandatory=$False)][int]$ipv4BlockMinSize,
         [Parameter(Mandatory=$False)][ValidateSet('dtc_no','dtc_yes')][string]$delegateToChildrenOnly='dtc_no',
-        [Parameter(Mandatory=$False)][ValidateSet('reserve_no','reserve_yes')][string]$reserveSubnetIPs='dtc_yes'
+        [Parameter(Mandatory=$False)][ValidateSet('reserve_no','reserve_yes')][string]$reserveSubnetIPs='dtc_yes',
+        [Parameter(Mandatory=$False)][ValidateSet('ipdup_no','ipdup_yes')][string]$allowDuplicateShortName='ipdup_yes'
     )
     
     $propertyBag = @{}
@@ -1625,6 +1626,9 @@ Function Set-iTopGlobalIPSetting {
     }
     if($PSBoundParameters.ContainsKey('reserveSubnetIPs')) {
         $propertyBag.Add('reserve_subnet_IPs',$reserveSubnetIPs)
+    }
+    if($PSBoundParameters.ContainsKey('allowDuplicateShortName')) {
+        $propertyBag.Add('ip_allow_duplicate_name',$allowDuplicateShortName)
     }
 
     Set-iTopObject -credentials $credentials -uri $uri -iTopObject $globalIPSetting -propertyBag $propertyBag
