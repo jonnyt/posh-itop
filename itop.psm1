@@ -4,8 +4,7 @@ Requires MySql libraries to be imported first when using the Data Synchro functi
 
 #>
 
-Function Get-Software
-{
+Function Get-Software {
     <#
     .Synopsis
     Find software
@@ -41,9 +40,8 @@ Function Get-Software
 New-Alias -Name Get-iTopSoftware -Value Get-Software -Force
 
 
-Function Get-iTopGlobalIPSetting
-{
-<#
+Function Get-iTopGlobalIPSetting {
+    <#
     .Synopsis
     Find Global IP Settings (IPConfig)
 
@@ -73,7 +71,7 @@ Function Get-iTopGlobalIPSetting
 }
 
 Function Get-iTopDomain {
-        Param(
+    Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
         [Parameter(Mandatory=$False)][string]$oqlFilter,
@@ -82,9 +80,8 @@ Function Get-iTopDomain {
     Get-iTopObject -objectClass 'Domain' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
 
-Function Get-iTopIPUsage
-{
-<#
+Function Get-iTopIPUsage {
+    <#
     .Synopsis
     Find Global IP Settings (IPConfig)
 
@@ -113,9 +110,8 @@ Function Get-iTopIPUsage
     Get-iTopObject -objectClass 'IPUsage' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
 
-Function Get-iTopLocation
-{
-<#
+Function Get-iTopLocation {
+    <#
     .Synopsis
     Find software
 
@@ -144,9 +140,8 @@ Function Get-iTopLocation
     Get-iTopObject -objectClass 'Location' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
 
-Function Get-SynchroDataSource
-{
-<#
+Function Get-SynchroDataSource {
+    <#
     .Synopsis
     Find a synchronization data source
 
@@ -181,9 +176,8 @@ Function Get-SynchroDataSource
 }
 New-Alias -Name Get-iTopSynchroDataSource -Value Get-SynchroDataSource -Force
 
-Function Get-FunctionalCI
-{
-<#
+Function Get-FunctionalCI {
+    <#
     .Synopsis
     Get a functional CI
 
@@ -218,9 +212,8 @@ Function Get-FunctionalCI
 }
 New-Alias -Name Get-iTopCI -Value Get-FunctionalCI -Force
 
-Function Get-Enclosure
-{
-<#
+Function Get-Enclosure {
+    <#
     .Synopsis
     Get an enclosure or collection of enclosures
 
@@ -249,9 +242,8 @@ Function Get-Enclosure
     Get-iTopObject -objectClass 'Enclosure' -ouputFields '*' -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-Function Get-Rack
-{
-<#
+Function Get-Rack {
+    <#
     .Synopsis
     Get rack or collection of racks
 
@@ -283,9 +275,8 @@ Function Get-Rack
     Get-iTopObject -objectClass 'Rack' -ouputFields '*' -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-Function Get-StorageSystem
-{
-<#
+Function Get-StorageSystem {
+    <#
     .Synopsis
     Get an enclosure or collection of storage systems
 
@@ -314,9 +305,8 @@ Function Get-StorageSystem
     Get-iTopObject -objectClass 'StorageSystem' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
 
-Function Get-iTopLogicalInterface
-{
-<#
+Function Get-iTopLogicalInterface {
+    <#
     .Synopsis
     Get an logial interface or collection of logical interfaces
 
@@ -345,9 +335,8 @@ Function Get-iTopLogicalInterface
     Get-iTopObject -objectClass 'LogicalInterface' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
 
-Function Get-LogicalVolume
-{
-<#
+Function Get-LogicalVolume {
+    <#
     .Synopsis
     Get an enclosure or collection of logical volumes
 
@@ -376,9 +365,8 @@ Function Get-LogicalVolume
     Get-iTopObject -objectClass 'LogicalVolume' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
 
-Function Get-Brand
-{
-<#
+Function Get-Brand {
+    <#
     .Synopsis
     Get a brand typology or collection of brands
 
@@ -408,9 +396,8 @@ Function Get-Brand
     Get-iTopObject -objectClass 'Brand' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
 
-Function Get-ContactType
-{
-<#
+Function Get-ContactType {
+    <#
     .Synopsis
     Get a contact type typology or collection of brands
 
@@ -445,9 +432,8 @@ Function Get-ContactType
 New-Alias -Name Get-iTopContactType -Value Get-ContactType -Force
 New-Alias -Name Get-iTopRole -Value Get-ContactType -Force
 
-Function Get-ContractType
-{
-<#
+Function Get-ContractType {
+    <#
     .Synopsis
     Get a contract typology or collection of contract types
 
@@ -480,9 +466,8 @@ Function Get-ContractType
     Get-iTopObject -objectClass 'ContractType' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
 
-Function Get-Model
-{
-<#
+Function Get-Model {
+    <#
     .Synopsis
     Get a model typology or collection of brands
 
@@ -514,9 +499,8 @@ Function Get-Model
     Get-iTopObject -objectClass 'Model' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
 
-Function Get-OSVersion
-{
-<#
+Function Get-OSVersion {
+    <#
     .Synopsis
     Get an OS Version typology or collection of OS Versions
 
@@ -546,9 +530,8 @@ Function Get-OSVersion
     Get-iTopObject -objectClass 'OSVersion' -ouputFields '*' -uri $uri -credentials $credentials
 }
 
-Function Get-OSFamily
-{
-<#
+Function Get-OSFamily {
+    <#
     .Synopsis
     Get an OS Family typology or collection of OS Families
 
@@ -575,9 +558,8 @@ Function Get-OSFamily
     Get-iTopObject -objectClass 'OSFamily' -ouputFields '*' -uri $uri -credentials $credentials
 }
 
-Function Get-Server
-{
-<#
+Function Get-Server {
+    <#
  .Synopsis
   Get a server collection of servers
 
@@ -609,8 +591,7 @@ Function Get-Server
     Get-iTopObject -objectClass 'Server' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials
 }
 
-Function Get-VirtualFarm
-{
+Function Get-VirtualFarm {
     <#
      .Synopsis
       Find a virtual farm / cluster
@@ -644,9 +625,8 @@ Function Get-VirtualFarm
     Get-iTopObject -objectClass 'Farm' -ouputFields $outputFields -oqlFilter $oqlFilter -uri $uri -credentials $credentials
 }
 
-Function Get-Hypervisor
-{
-<#
+Function Get-Hypervisor {
+    <#
  .Synopsis
   Get a hypervisor or collection of hypervisors
 
@@ -679,9 +659,8 @@ Function Get-Hypervisor
     Get-iTopObject -objectClass 'Hypervisor' -ouputFields $outputFields  -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-Function Get-DBServer
-{
-<#
+Function Get-DBServer {
+    <#
  .Synopsis
   Get a dbserver or collection of dbservers
 
@@ -714,8 +693,7 @@ Function Get-DBServer
     Get-iTopObject -objectClass 'DBServer' -ouputFields $outputFields  -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-Function Get-Organization
-{
+Function Get-Organization {
     <#
      .Synopsis
       Get all organizations
@@ -749,8 +727,7 @@ Function Get-Organization
     Get-iTopObject -objectClass 'Organization' -ouputFields '*' -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-Function Get-Contact
-{
+Function Get-Contact {
     <#
      .Synopsis
       Get a contact or collection of contacts
@@ -784,8 +761,7 @@ Function Get-Contact
     Get-iTopObject -objectClass 'Contact' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
 }
 
-Function Get-Team
-{
+Function Get-Team {
     <#
      .Synopsis
       Get a team or collection of teams
@@ -816,8 +792,7 @@ Function Get-Team
     Get-iTopObject -objectClass 'Team' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
 }
 
-Function Get-iTopGroup
-{
+Function Get-iTopGroup {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -940,8 +915,7 @@ Function Get-iTopVlan {
     Get-iTopObject -objectClass 'VLAN' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
 }
 
-Function Get-Person
-{
+Function Get-Person {
     <#
      .Synopsis
       Get a person or collection of people
@@ -975,8 +949,7 @@ Function Get-Person
     Get-iTopObject -objectClass 'Person' -uri $uri -credentials $credentials -oqlFilter $oqlFilter -ouputFields $outputFields
 }
 
-Function Get-CustomerContract
-{
+Function Get-CustomerContract {
     <#
      .Synopsis
       Get a customer contract or collection of contracts
@@ -1010,8 +983,7 @@ Function Get-CustomerContract
     Get-iTopObject -objectClass 'CustomerContract' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-Function Get-ProviderContract
-{
+Function Get-ProviderContract {
     <#
      .Synopsis
       Get a provider contract or collection of contracts
@@ -1045,8 +1017,7 @@ Function Get-ProviderContract
     Get-iTopObject -objectClass 'ProviderContract' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-Function Get-LinkServiceToSLA
-{
+Function Get-LinkServiceToSLA {
     Param(
         [Parameter(Mandatory=$True)][object]$service,
         [Parameter(Mandatory=$True)][object]$sla
@@ -1061,8 +1032,7 @@ Function Get-LinkServiceToSLA
     ,$thisArray
 }
 
-Function New-CustomerContract
-{
+Function New-CustomerContract {
     Param(
         [Parameter(Mandatory=$True)][string]$name,
         [Parameter(Mandatory=$True)][string]$org_name,
@@ -1085,16 +1055,14 @@ Function New-CustomerContract
 
     # build our linked objects, iTop only want certain lookup fields per object, so we'll feed those in
     $contacts_list = @()
-    foreach($ci in $contacts)
-    {
+    foreach($ci in $contacts) {
         $ciHash = @{}
         $ciHash.add("contact_id",("SELECT Contact WHERE id =`"$($ci.key)`""))
         $contacts_list += $ciHash
     }
 
     $functionalcis_list = @()
-    foreach($ci in $functionalcis)
-    {
+    foreach($ci in $functionalcis) {
         $ciHash = @{}
         $ciHash.add("functionalci_id",("SELECT FunctionalCI WHERE id =`"$($ci.key)`""))
         $functionalcis_list += $ciHash
@@ -1129,8 +1097,7 @@ Function New-CustomerContract
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function New-Organization
-{
+Function New-Organization {
     Param(
         [Parameter(Mandatory=$True)][string]$name,
         [Parameter(Mandatory=$True)][string]$code,
@@ -1154,8 +1121,7 @@ Function New-Organization
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function New-Brand
-{
+Function New-Brand {
     Param(
         [Parameter(Mandatory=$True)][string]$name,
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
@@ -1175,8 +1141,7 @@ Function New-Brand
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function New-ContactType
-{
+Function New-ContactType {
     Param(
         [Parameter(Mandatory=$True)][string]$name,
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
@@ -1196,8 +1161,7 @@ Function New-ContactType
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function New-Model
-{
+Function New-Model {
     Param(
         [Parameter(Mandatory=$True)][string]$name,
         [Parameter(Mandatory=$True)][string]$type,
@@ -1221,8 +1185,7 @@ Function New-Model
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function New-OSFamily
-{
+Function New-OSFamily {
     Param(
         [Parameter(Mandatory=$True)][string]$name,
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
@@ -1242,8 +1205,7 @@ Function New-OSFamily
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function New-OSVersion
-{
+Function New-OSVersion {
     Param(
         [Parameter(Mandatory=$True)][string]$name,
         [Parameter(Mandatory=$True)][string]$osfamily_name,
@@ -1265,8 +1227,7 @@ Function New-OSVersion
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function New-VirtualFarm
-{
+Function New-VirtualFarm {
     Param(
         [Parameter(Mandatory=$True)][string]$uuid,
         [Parameter(Mandatory=$True)][string]$name,
@@ -1291,8 +1252,7 @@ Function New-VirtualFarm
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function New-Hypervisor
-{
+Function New-Hypervisor {
     Param(
         [Parameter(Mandatory=$True)][string]$name,
         [Parameter(Mandatory=$True)][string]$org_name,
@@ -1307,8 +1267,7 @@ Function New-Hypervisor
     }
 
     # add optional parameters
-    if($farm_name -ne $null -and $farm_name -ne 'host' -and $farm_name -ne '')
-    {
+    if($farm_name -ne $null -and $farm_name -ne 'host' -and $farm_name -ne '') {
         $fields | Add-Member -NotePropertyName farm_id -NotePropertyValue "SELECT Farm WHERE name = `"$farm_name`""
     }
     
@@ -1323,8 +1282,7 @@ Function New-Hypervisor
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function New-Team
-{
+Function New-Team {
     Param(
         [Parameter(Mandatory=$True)][string]$name,
         [Parameter(Mandatory=$False)][string]$email = $null,
@@ -1341,24 +1299,20 @@ Function New-Team
     }
 
     # add optional parameters
-    if(![String]::IsNullOrEmpty($phone))
-    {
+    if(![String]::IsNullOrEmpty($phone)) {
         $fields | Add-Member -NotePropertyName 'phone' -NotePropertyValue $phone
     }
-    if(![String]::IsNullOrEmpty($email))
-    {
+    if(![String]::IsNullOrEmpty($email)) {
         $fields | Add-Member -NotePropertyName 'email' -NotePropertyValue $email
     }
-        if(![String]::IsNullOrEmpty($function))
-    {
+    if(![String]::IsNullOrEmpty($function)) {
         $fields | Add-Member -NotePropertyName 'function' -NotePropertyValue $function
     }
 
     New-iTopObject -objectClass 'Team' -fields $fields -credentials $credentials -uri $uri
 }
 
-Function New-Person
-{
+Function New-Person {
     Param(
         [Parameter(Mandatory=$True)][string]$firstName,
         [Parameter(Mandatory=$True)][string]$lastName,
@@ -1377,8 +1331,7 @@ Function New-Person
     }
 
     # add optional parameters
-    if(![String]::IsNullOrEmpty($phone))
-    {
+    if(![String]::IsNullOrEmpty($phone)) {
         $fields | Add-Member -NotePropertyName 'phone' -NotePropertyValue $phone
     }
 
@@ -1393,9 +1346,8 @@ Function New-Person
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function New-VirtualMachine
-{
-<#
+Function New-VirtualMachine {
+    <#
  .Synopsis
   Creates a VirtualMachine object in iTop
 
@@ -1453,12 +1405,10 @@ Function New-VirtualMachine
     }
 
     # add optional parameters
-    if($numCPU -ne $null)
-    {
+    if($numCPU -ne $null) {
         $fields | Add-Member -NotePropertyName 'cpu' -NotePropertyValue $numCPU
     }
-    if($ramGB -ne $null)
-    {
+    if($ramGB -ne $null) {
         $fields | Add-Member -NotePropertyName 'ram' -NotePropertyValue $ramGB
     }
 
@@ -1473,8 +1423,7 @@ Function New-VirtualMachine
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function Get-VirtualMachine
-{
+Function Get-VirtualMachine {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -1485,8 +1434,7 @@ Function Get-VirtualMachine
     Get-iTopObject -objectClass 'VirtualMachine' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-Function Get-ApplicationSolution
-{
+Function Get-ApplicationSolution {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -1497,8 +1445,7 @@ Function Get-ApplicationSolution
     Get-iTopObject -objectClass 'ApplicationSolution' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-Function Get-SynchroReplica
-{
+Function Get-SynchroReplica {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -1509,8 +1456,7 @@ Function Get-SynchroReplica
     Get-iTopObject -objectClass 'SynchroReplica' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-Function Remove-CustomerContract
-{
+Function Remove-CustomerContract {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -1520,8 +1466,7 @@ Function Remove-CustomerContract
     Remove-iTopObject -credentials $credentials -uri $uri -object $customerContract
 }
 
-Function Remove-iTopObject
-{
+Function Remove-iTopObject {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -1537,8 +1482,7 @@ Function Remove-iTopObject
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function Set-Team
-{
+Function Set-Team {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -1553,51 +1497,41 @@ Function Set-Team
     # Create a hash table to store all of the fields
     $propertyBag = @{}
 
-    if($PersonRoles -ne $nul)
-    {
+    if($PersonRoles -ne $nul) {
         $personsList = @()
-        foreach($person in $PersonRoles.Keys)
-        {
+        foreach($person in $PersonRoles.Keys) {
             $role = $PersonRoles.$person
             $personHash = @{}
 
-            if($person.key -ne $null)
-            {
+            if($person.key -ne $null) {
                 $personHash.Add('person_id',("SELECT Contact WHERE id = `"$($person.key)`""))
             }
-            elseif($person.contact_id -ne $null)
-            {
+            elseif($person.contact_id -ne $null) {
                 $personHash.add("person_id",("SELECT Contact WHERE id = `"$($person.contact_id)`""))
             }
-            elseif($person.person_id -ne $null)
-            {
+            elseif($person.person_id -ne $null) {
                 $personHash.add("person_id",("SELECT Contact WHERE id = `"$($person.person_id)`""))
             }
             
-            if($role -ne $null)
-            {
+            if($role -ne $null) {
                 $personHash.Add('role_id',("SELECT ContactType WHERE name = `"$($role.name)`""))
             }
 
             # Add to the array only if not already there
             $alreadyAdded = $false
-            foreach($existingPersonHash in $personsList)
-            {
-                if(($existingPersonHash.'person_id' -eq $personHash.'person_id') -and ($existingPersonHash.'role_id' -eq $personHash.'role_id'))
-                {
+            foreach($existingPersonHash in $personsList) {
+                if(($existingPersonHash.'person_id' -eq $personHash.'person_id') -and ($existingPersonHash.'role_id' -eq $personHash.'role_id')) {
                     $alreadyAdded = $true
                     break
                 }
             }
-            if(!$alreadyAdded)
-            {
+            if(!$alreadyAdded) {
                 $personsList += $personHash
             }
         }
         $propertyBag.Add('persons_list',$personsList)
     }
-    if($CIs -ne $null)
-    {
+    if($CIs -ne $null) {
         $propertyBag.Add('cis_list',$CIs)
     }
 
@@ -1635,38 +1569,32 @@ Function Set-iTopGlobalIPSetting {
 }
 
 
-Function Set-iTopObject
-{
-   Param(
+Function Set-iTopObject {
+    Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
         [Parameter(Mandatory=$True)]$iTopObject,
         [Parameter(Mandatory=$False)]$propertyBag=@{}
     )
 
-    if($iTopObject.key -eq $null)
-    {
+    if($iTopObject.key -eq $null) {
         Throw "Please pass a full iTop object to Set- commandlets.  Missing the key property."
     }
 
     $fields = New-Object PSObject -Property @{}
 
     # Property bag can contain a Hashtable to property name/values
-    if($propertyBag.count -gt 0)
-    {
-        foreach($key in $propertyBag.keys)
-        {
+    if($propertyBag.count -gt 0) {
+        foreach($key in $propertyBag.keys) {
             $fields | Add-Member -MemberType NoteProperty -Name $key -Value $propertyBag[$key]
         }
     }
 
     $class = $null
-    if(![string]::IsNullOrEmpty($iTopObject.finalclass))
-    {
+    if(![string]::IsNullOrEmpty($iTopObject.finalclass)) {
         $class = $iTopObject.finalclass
     }
-    elseif(![string]::IsNullOrEmpty($iTopObject.class))
-    {
+    elseif(![string]::IsNullOrEmpty($iTopObject.class)) {
         $class = $iTopObject.class
     }
 
@@ -1682,8 +1610,7 @@ Function Set-iTopObject
  
 }
 
-Function Set-FunctionalCI
-{
+Function Set-FunctionalCI {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -1697,23 +1624,19 @@ Function Set-FunctionalCI
 
     # build our linked objects, iTop only want certain lookup fields per object, so we'll feed those in
     $contacts_list = @()
-    foreach($contact in $contacts)
-    {
+    foreach($contact in $contacts) {
         $contactHash = @{}
-        if($contact.key -ne $null)
-        {
+        if($contact.key -ne $null) {
             $contactHash.add("contact_id",("SELECT Contact WHERE id = `"$($contact.key)`""))
         }
-        elseif($contact.contact_id -ne $null)
-        {
+        elseif($contact.contact_id -ne $null) {
             $contactHash.add("contact_id",("SELECT Contact WHERE id = `"$($contact.contact_id)`""))
         }
         $contacts_list += $contactHash
     }
 
     $applicationsolution_list = @()
-    foreach($applicationsolution in $applicationSolutions)
-    {
+    foreach($applicationsolution in $applicationSolutions) {
         $appSolutionHash = @{}
         $appSolutionHash.add("applicationsolution_id",("SELECT ApplicationSolution WHERE id = `"$($applicationsolution.key)`""))
         $applicationsolution_list += $appSolutionHash
@@ -1721,23 +1644,18 @@ Function Set-FunctionalCI
 
     $fields = New-Object PSObject -Property @{}
 
-    if($contacts_list.Count -gt 0)
-    {
+    if($contacts_list.Count -gt 0) {
         $fields | Add-Member -MemberType NoteProperty -Name 'contacts_list' -Value $contacts_list
     }
-        if($applicationsolution_list.Count -gt 0)
-    {
+    if($applicationsolution_list.Count -gt 0) {
         $fields | Add-Member -MemberType NoteProperty -Name 'applicationsolution_list' -Value $applicationsolution_list
     }
-    if(![string]::IsNullOrEmpty($orgId))
-    {
+    if(![string]::IsNullOrEmpty($orgId)) {
         $fields | Add-Member -MemberType NoteProperty -Name 'org_id' -Value "SELECT Organization WHERE id = `"$orgId`""
     }
     # Property bag can contain a Hashtable to property name/values
-    if($propertyBag.count -gt 0)
-    {
-        foreach($key in $propertyBag.keys)
-        {
+    if($propertyBag.count -gt 0) {
+        foreach($key in $propertyBag.keys) {
             $fields | Add-Member -MemberType NoteProperty -Name $key -Value $propertyBag[$key]
         }
     }
@@ -1753,8 +1671,7 @@ Function Set-FunctionalCI
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function Set-CustomerContract
-{
+Function Set-CustomerContract {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -1771,27 +1688,22 @@ Function Set-CustomerContract
 
     # build our linked objects, iTop only wants certain lookup fields per object, so we'll feed those in
     $contacts_list = @()
-    foreach($contact in $contacts)
-    {
+    foreach($contact in $contacts) {
         $contactHash = @{}
-        if($contact.key -ne $null)
-        {
+        if($contact.key -ne $null) {
             $contactHash.add("contact_id",("SELECT Contact WHERE id = `"$($contact.key)`""))
         }
-        elseif($contact.contact_id -ne $null)
-        {
+        elseif($contact.contact_id -ne $null) {
             $contactHash.add("contact_id",("SELECT Contact WHERE id = `"$($contact.contact_id)`""))
         }
-        elseif($contact.person_id -ne $null)
-        {
+        elseif($contact.person_id -ne $null) {
             $contactHash.add("contact_id",("SELECT Contact WHERE id = `"$($contact.person_id)`""))
         }
         $contacts_list += $contactHash
     }
 
     $functionalcis_list = @()
-    foreach($functionalCI in $functionalCIs | ? {$_ -ne $null})
-    {
+    foreach($functionalCI in $functionalCIs | ? {$_ -ne $null}) {
         $functionalciHash = @{}
         $functionalciHash.add("functionalci_id",("SELECT FunctionalCI WHERE id = `"$($functionalCI.key)`""))
         $functionalcis_list += $functionalciHash
@@ -1799,32 +1711,25 @@ Function Set-CustomerContract
 
     $propertyBag = @{}
 
-    if($contacts_list.Count -gt 0)
-    {
+    if($contacts_list.Count -gt 0) {
         $propertyBag.Add('contacts_list',$contacts_list)
     }
-    if($functionalcis_list.Count -gt 0)
-    {   
+    if($functionalcis_list.Count -gt 0) {   
         $propertyBag.Add('functionalcis_list',$functionalcis_list)
     }
-    if($PSBoundParameters.ContainsKey('org_id'))
-    {   
+    if($PSBoundParameters.ContainsKey('org_id')) {   
         $propertyBag.Add('org_id',"SELECT Organization WHERE id = `"$orgId`"")
     }
-    if($PSBoundParameters.ContainsKey('cost_unit'))
-    {
+    if($PSBoundParameters.ContainsKey('cost_unit')) {
         $propertyBag.Add('cost_unit',$cost_unit)
     }
-    if($PSBoundParameters.ContainsKey('start_date'))
-    {
+    if($PSBoundParameters.ContainsKey('start_date')) {
         $propertyBag.Add('start_date',$start_date)
     }
-    if($PSBoundParameters.ContainsKey('end_date'))
-    {
+    if($PSBoundParameters.ContainsKey('end_date')) {
         $propertyBag.Add('end_date',$end_date)
     }
-    if($PSBoundParameters.ContainsKey('services_list'))
-    {
+    if($PSBoundParameters.ContainsKey('services_list')) {
         $propertyBag.Add('services_list',$services_list)
     }
 
@@ -1845,8 +1750,7 @@ Function New-iTopDomain {
     New-iTopObject -objectClass 'Domain' -fields  $fields -credentials $credentials -uri $uri
 }
 
-Function New-Software
-{
+Function New-Software {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -1857,16 +1761,13 @@ Function New-Software
     )
     
     $propertyBag = @{}
-    if($PSBoundParameters.ContainsKey('vendor'))
-    {
+    if($PSBoundParameters.ContainsKey('vendor')) {
         $propertyBag.Add('vendor',$vendor)
     }
-    if($PSBoundParameters.ContainsKey('version'))
-    {
+    if($PSBoundParameters.ContainsKey('version')) {
         $propertyBag.Add('version',$version)
     }
-        if($PSBoundParameters.ContainsKey('type'))
-    {
+    if($PSBoundParameters.ContainsKey('type')) {
         $propertyBag.Add('type',$type)
     }
 
@@ -1875,8 +1776,7 @@ Function New-Software
     $propertyBag.Keys | % {$oqlFilter += " AND $_ = '$($propertyBag.$_)'"}
 
     $thisSoftware = Get-Software -credentials $credentials -uri $uri -oqlFilter $oqlFilter
-    if(!$thisSoftware)
-    {
+    if(!$thisSoftware) {
         $fields = New-Object PSObject -Property @{
             name = $name
         }
@@ -1885,14 +1785,12 @@ Function New-Software
 
         New-iTopObject -objectClass "Software" -fields $fields -credentials $credentials -uri $uri
     }
-    else
-    {
+    else {
         $thisSoftware
     }
 }
 
-Function Get-Service
-{
+Function Get-Service {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -1904,8 +1802,7 @@ Function Get-Service
 
 }
 
-Function Get-SLA
-{
+Function Get-SLA {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
@@ -1916,8 +1813,7 @@ Function Get-SLA
     Get-iTopObject -objectClass 'SLA' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
-Function New-VirtualMachineReplica
-{
+Function New-VirtualMachineReplica {
     Param(
         [Parameter(Mandatory=$True)][string]$uuid,
         [Parameter(Mandatory=$True)][string]$name,
@@ -1948,9 +1844,8 @@ Function New-VirtualMachineReplica
     $res
 }
 
-Function Get-iTopObject
-{
-<#
+Function Get-iTopObject {
+    <#
  .Synopsis
   Retrieves an iTop object.
 
@@ -1987,8 +1882,7 @@ Function Get-iTopObject
     $query = "SELECT $objectClass"
 
     # Calculate our OQL query
-    if(![string]::IsNullOrEmpty($oqlFilter))
-    {
+    if(![string]::IsNullOrEmpty($oqlFilter)) {
         $query = $query + " $oqlFilter"
     }
 
@@ -2004,8 +1898,7 @@ Function Get-iTopObject
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function New-iTopObject
-{
+Function New-iTopObject {
     Param(
         [Parameter(Mandatory=$True)][string]$objectClass,
         [Parameter(Mandatory=$True)]$fields,
@@ -2026,9 +1919,8 @@ Function New-iTopObject
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
-Function Invoke-SynchroExec
-{
-<#
+Function Invoke-SynchroExec {
+    <#
  .Synopsis
   Invoke the synchro exec over the webservice.
 
@@ -2056,25 +1948,22 @@ Function Invoke-SynchroExec
 
     # build our paramter hash
     $requestBody =  @{
-            data_sources=$dataSource.key
-            auth_user=$credentials.UserName
-            auth_pwd=$credentials.GetNetworkCredential().Password
+        data_sources=$dataSource.key
+        auth_user=$credentials.UserName
+        auth_pwd=$credentials.GetNetworkCredential().Password
     }
 
     # send the web request and get the response
     $res = Invoke-WebRequest -Method Post -Uri $uri -Body $requestBody -TimeoutSec 960 -UseBasicParsing
-    if($res.StatusCode -eq 200)
-    {
+    if($res.StatusCode -eq 200) {
         $res
     }
-    else
-    {
+    else {
         Throw "Synchro_exec returned an error when running $res"
     }
 }
 
-Function Invoke-SyncScript
-{
+Function Invoke-SyncScript {
     Param(
         [Parameter(Mandatory=$TRUE)]$datasourceObject,
         [Parameter(Mandatory=$TRUE)]$ITOP_SSH_Username,
@@ -2092,9 +1981,8 @@ Function Invoke-SyncScript
     $sshRes
 }
 
-Function GenerateAndSendRequest
-{
-<#
+Function GenerateAndSendRequest {
+    <#
  .Synopsis
   Format an iTop request and handle the result.
 
@@ -2120,10 +2008,10 @@ Function GenerateAndSendRequest
     )
 
     $requestBody =  @{
-            version="1.1"
-            auth_user=$credentials.UserName
-            auth_pwd=$credentials.GetNetworkCredential().Password
-            json_data=ConvertTo-Json($requestHash) -Depth 10
+        version="1.1"
+        auth_user=$credentials.UserName
+        auth_pwd=$credentials.GetNetworkCredential().Password
+        json_data=ConvertTo-Json($requestHash) -Depth 10
     }
 
     # Let's use the .Net JavaScript serializer, the PowerShell implementation is limited in length
@@ -2139,30 +2027,25 @@ Function GenerateAndSendRequest
     $result = $javaScriptSerializer.DeserializeObject($resp.Content)
 
     # Is there an unexpected exception?
-    if($result.code -ne 0)
-    {
+    if($result.code -ne 0) {
         throw "Result code = $($result.code), $($result.message)"
     }
 
     # If we have empty objects that simply means the search worked but came up empty for some reason
-    if($result.objects.count -eq 0)
-    {
+    if($result.objects.count -eq 0) {
         # Return null
         $null
     }
 
     # Looks like we have at least one object to return, let's create a PSObject because it's easier to enum
     # We can also add the key and class type of the iTop object
-    foreach ($key in $result.objects.Keys)
-    {
+    foreach ($key in $result.objects.Keys) {
         $thisObject = New-Object -Type PSObject -Property $result.objects.$key.fields
-        if($result.objects.$key.key -ne $null)
-        {
+        if($result.objects.$key.key -ne $null) {
             # using the newer API, let's add the key
             $thisObject | Add-Member Noteproperty -Name "key" -Value $result.objects.$key.key
         }
-        if($result.objects.$key.class -ne $null)
-        {
+        if($result.objects.$key.class -ne $null) {
             # using the newer API, let's add the class
             $thisObject | Add-Member Noteproperty -Name "class" -Value $result.objects.$key.class
         }
