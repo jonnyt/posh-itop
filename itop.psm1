@@ -4,6 +4,50 @@ Requires MySql libraries to be imported first when using the Data Synchro functi
 
 #>
 
+Function Get-iTopVirtualDeviceVolume {
+    <#
+    .Synopsis
+    Get volume information for a virtual device (Virtualmachine, Hypervisor, Farm)
+
+    .Description
+    Get volume information for a virtual device (Virtualmachine, Hypervisor, Farm)
+
+    .Parameter authName
+    Logon for the iTop web service
+
+    .Parameter authPwd
+    Password for the iTop web service
+
+    .Parameter uri
+    uri for the iTop web service
+
+    .Example
+    Get-iTopVirtualDeviceVolume -authName 'user' -authPwd 'password' -uri 'https://webservice.edu'
+
+    .Example
+    Get-iTopVirtualDeviceVolume -authName 'user' -authPwd 'password' -uri 'https://webservice.edu' -oqlFilter "WHERE name = 'MySQL'"
+
+#>
+
+    [CmdletBinding(DefaultParameterSetName='All')]
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(ParameterSetName='name',Mandatory=$False)][string]$virtualDeviceName,
+        [Parameter(ParameterSetName='id',Mandatory=$False)][string]$virtualDeviceID,
+        [Parameter(ParameterSetName='oql',Mandatory=$False)][string]$oqlFilter,
+        [Parameter(ParameterSetName='oql',Mandatory=$False)][string]$outputFields='*'
+    )
+
+    switch($PSCmdlet.ParameterSetName)
+    {
+        'name'{Get-iTopObject -objectClass 'lnkVirtualDeviceToVolume' -oqlFilter "WHERE virtualdevice_name = '$virtualDeviceName'" -ouputFields $outputFields -uri $uri -credentials $credentials}
+        'id' {Get-iTopObject -objectClass 'lnkVirtualDeviceToVolume' -oqlFilter "WHERE virtualdevice_id = '$virtualDeviceID'" -ouputFields $outputFields -uri $uri -credentials $credentials}
+        'oql' {Get-iTopObject -objectClass 'lnkVirtualDeviceToVolume' -oqlFilter $oqlFilter -ouputFields $outputFields -uri $uri -credentials $credentials}
+        default {Get-iTopObject -objectClass 'lnkVirtualDeviceToVolume' -uri $uri -credentials $credentials}
+    }
+}
+
 Function Get-Software {
     <#
     .Synopsis
