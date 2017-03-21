@@ -1527,6 +1527,41 @@ Function Remove-iTopObject {
 }
 
 Function Set-Team {
+
+    <#
+ .Synopsis
+  Updates / sets values on a Team CI
+
+ .Description
+  Updates / sets values on a Team CI
+
+ .Parameter team
+  The Team CI
+
+ .Parameter PersonRoles
+  Hashtable of Person CI (key) : Role CI (val)
+
+ .Parameter CIs
+ String or array of CIs owned by the team
+
+ .Parameter orgName
+  The organization name, must already exist in iTop
+
+ .Parameter authName
+  Logon for the iTop web service
+
+ .Parameter authPwd
+  Password for the iTop web service
+
+ .Parameter uri
+  uri for the iTop web service
+
+ .Example
+    $personCI = Get-Person -Name "Walter Becker"
+    $roleCI = Get-Role -Name "Bass Player"
+    Get-Team -Name "Steely Dan" | Set-Team -PersonRoles @{$personCI = $roleCI}
+
+#>
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri,
