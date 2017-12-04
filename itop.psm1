@@ -1998,6 +1998,61 @@ Function New-iTopObject {
     GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
 }
 
+Function Invoke-SynchroImport {
+    <#
+ .Synopsis
+  Invoke the synchro import over the webservice.
+
+ .Description
+  Invoke the synchro import over the webservice.  Expects the URI as something like https://myserver.com/itop/synchro/synchro_import.php
+
+ .Parameter dataSource
+  The datasource object to run the synchro
+
+ .Parameter authName
+  Logon for the iTop web service
+
+ .Parameter authPwd
+  Password for the iTop web service
+
+ .Parameter uri
+  uri for the iTop web service
+
+  .Parameter csvData
+  the csv data array
+
+  .Parameter synchronize
+  if true run the sync after the import
+#>
+
+    Param(
+        [Parameter(Mandatory=$True)]$dataSource,
+        [Parameter(Mandatory=$True)]$credentials,
+        [Parameter(Mandatory=$True)]$uri,
+        [Parameter(Mandatory=$True)]$csvData,
+        [Parameter(Mandatory=$False)][boolean]$synchronize = $false
+
+    )
+
+    # build our paramter hash
+    $requestBody =  @{
+        data_source_id=$dataSource.key
+        auth_user=$credentials.UserName
+        auth_pwd=$credentials.GetNetworkCredential().Password
+        csvdata = $csvData
+        synchronize = $synchronize
+    }
+
+    # send the web request and get the response
+    $res = Invoke-WebRequest -Method Post -Uri $uri -Body $requestBody -TimeoutSec 960 -UseBasicParsing
+    if($res.StatusCode -eq 200) {
+        $res.content
+    }
+    else {
+        Throw "Synchro_import returned an error when running $res"
+    }
+}
+
 Function Invoke-SynchroExec {
     <#
  .Synopsis
