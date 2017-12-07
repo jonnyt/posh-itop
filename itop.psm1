@@ -2021,16 +2021,13 @@ Function Invoke-SynchroImport {
   .Parameter csvData
   the csv data array
 
-  .Parameter synchronize
-  if true run the sync after the import
 #>
 
     Param(
         [Parameter(Mandatory=$True)]$dataSource,
         [Parameter(Mandatory=$True)]$credentials,
         [Parameter(Mandatory=$True)]$uri,
-        [Parameter(Mandatory=$True)]$csvData,
-        [Parameter(Mandatory=$False)][boolean]$synchronize = $false
+        [Parameter(Mandatory=$True)]$csvData
 
     )
 
@@ -2040,13 +2037,12 @@ Function Invoke-SynchroImport {
         auth_user=$credentials.UserName
         auth_pwd=$credentials.GetNetworkCredential().Password
         csvdata = $csvData
-        synchronize = $synchronize
     }
 
     # send the web request and get the response
     $res = Invoke-WebRequest -Method Post -Uri $uri -Body $requestBody -TimeoutSec 960 -UseBasicParsing
     if($res.StatusCode -eq 200) {
-        $res.content
+        $res
     }
     else {
         Throw "Synchro_import returned an error when running $res"
