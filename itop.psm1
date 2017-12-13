@@ -1815,6 +1815,48 @@ Function Set-CustomerContract {
     Set-iTopObject -credentials $credentials -uri $uri -iTopObject $customerContract -propertyBag $propertyBag
 }
 
+Function Set-VirtualMachine {
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$True)]$virtualMachine,
+        [Parameter(Mandatory=$False)]$contacts,
+        [Parameter(Mandatory=$False)]$org_id=$null,
+        [Parameter(Mandatory=$False)]$dataclassification=$null
+    )
+
+
+    # build our linked objects, iTop only wants certain lookup fields per object, so we'll feed those in
+    $contacts_list = @()
+    foreach($contact in $contacts) {
+        $contactHash = @{}
+        if($contact.key -ne $null) {
+            $contactHash.add("contact_id",("SELECT Contact WHERE id = `"$($contact.key)`""))
+        }
+        elseif($contact.contact_id -ne $null) {
+            $contactHash.add("contact_id",("SELECT Contact WHERE id = `"$($contact.contact_id)`""))
+        }
+        elseif($contact.person_id -ne $null) {
+            $contactHash.add("contact_id",("SELECT Contact WHERE id = `"$($contact.person_id)`""))
+        }
+        $contacts_list += $contactHash
+    }
+
+    $propertyBag = @{}
+
+    if($contacts_list.Count -gt 0) {
+        $propertyBag.Add('contacts_list',$contacts_list)
+    }
+    if($PSBoundParameters.ContainsKey('org_id')) {   
+        $propertyBag.Add('org_id',"SELECT Organization WHERE id = `"$org_id`"")
+    }
+    if($PSBoundParameters.ContainsKey('dataclassification')) {
+        $propertyBag.Add('dataclassification',$dataclassification)
+    }
+
+    Set-iTopObject -credentials $credentials -uri $uri -iTopObject $virtualMachine -propertyBag $propertyBag
+}
+
 Function New-iTopDomain {
     Param(
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
@@ -1890,6 +1932,68 @@ Function Get-SLA {
     )
 
     Get-iTopObject -objectClass 'SLA' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
+}
+
+Function Get-LDAPUser {
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+
+    Get-iTopObject -objectClass 'UserLDAP' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
+}
+
+Function New-LDAPUser {
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$True)]$contact,
+        [Parameter(Mandatory=$True)][string]$login,
+        [Parameter(Mandatory=$True)][array]$profiles,
+        [Parameter(Mandatory=$False)][array]$allowedOrgs
+    )
+    # build our linked objects, iTop only want certain lookup fields per object, so we'll feed those in
+    $profile_list = @()
+    foreach($p in $profiles) {
+        $pHash = @{}
+        $phash.add("profileid",("SELECT URP_Profiles WHERE id =`"$($p.key)`""))
+        $profile_list += $pHash
+    }
+
+    $allowed_org_list = @()
+    foreach($o in $allowedOrgs) {
+        $oHash = @{}
+        $oHash.add("allowed_org_id",("SELECT Organization WHERE id =`"$($o.key)`""))
+        $allowed_org_list += $oHash
+    }
+
+    $fields = New-Object PSObject -Property @{
+        contactid = $contact.key
+        profile_list = $profile_list
+        allowed_org_list = $allowed_org_list
+        login = $login
+    }
+
+    $operation = New-Object PSObject -Property @{ 
+        operation = 'core/create'
+        class = 'UserLDAP'
+        comment = 'Create from API call'
+        output_fields = '*'
+        fields = $fields
+    }
+    GenerateAndSendRequest -credentials $credentials -uri $uri -requestHash $operation
+}
+
+Function Get-Profile {
+    Param(
+        [Parameter(Mandatory=$True)][PSCredential]$credentials,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$False)][string]$oqlFilter,
+        [Parameter(Mandatory=$False)][string]$outputFields='*'
+    )
+    Get-iTopObject -objectClass 'URP_Profiles' -ouputFields $outputFields -uri $uri -credentials $credentials -oqlFilter $oqlFilter
 }
 
 Function New-VirtualMachineReplica {
