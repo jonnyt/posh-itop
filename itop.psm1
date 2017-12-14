@@ -1825,7 +1825,6 @@ Function Set-VirtualMachine {
         [Parameter(Mandatory=$False)]$dataclassification=$null
     )
 
-
     # build our linked objects, iTop only wants certain lookup fields per object, so we'll feed those in
     $contacts_list = @()
     foreach($contact in $contacts) {
