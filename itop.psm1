@@ -1422,7 +1422,7 @@ Function New-VirtualMachine {
  .Parameter hostName
   The hypervisor name, must already exist in iTop
 
- .Parameter orgName
+ .Parameter org
   The organization name, must already exist in iTop
 
  .Parameter authName
@@ -1445,17 +1445,28 @@ Function New-VirtualMachine {
         [Parameter(Mandatory=$False)][string]$numCPU,
         [Parameter(Mandatory=$False)][string]$ramGB,
         [Parameter(Mandatory=$True)][string]$hostName,
-        [Parameter(Mandatory=$True)][string]$orgName,
+        [Parameter(Mandatory=$false)][string]$orgName,
+        [Parameter(Mandatory=$false)][string]$orgID,
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri
     )
 
-    $fields = New-Object PSObject -Property @{
-        org_id = "SELECT Organization WHERE name = `"$orgName`""
-        virtualhost_id = "SELECT VirtualHost WHERE name = `"$hostName`""
-        name = $name
-        uuid = $uuid
+    if($PSBoundParameters.ContainsKey('orgName')) {
+        $fields = New-Object PSObject -Property @{
+            org_id = "SELECT Organization WHERE name = `"$orgName`""
+            virtualhost_id = "SELECT VirtualHost WHERE name = `"$hostName`""
+            name = $name
+            uuid = $uuid
+        }
+    } else {
+        $fields = New-Object PSObject -Property @{
+            org_id = "SELECT Organization WHERE id = `"$orgID`""
+            virtualhost_id = "SELECT VirtualHost WHERE name = `"$hostName`""
+            name = $name
+            uuid = $uuid
+        }
     }
+  
 
     # add optional parameters
     if($numCPU -ne $null) {
