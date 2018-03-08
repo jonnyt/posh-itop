@@ -1331,16 +1331,25 @@ Function New-Team {
         [Parameter(Mandatory=$True)][string]$name,
         [Parameter(Mandatory=$False)][string]$email = $null,
         [Parameter(Mandatory=$False)][string]$phone = $null,
-        [Parameter(Mandatory=$True)][string]$orgName,
+        [Parameter(Mandatory=$False)][string]$orgName,
+        [Parameter(Mandatory=$False)][string]$orgID,
         [Parameter(Mandatory=$False)][string]$function,
         [Parameter(Mandatory=$True)][PSCredential]$credentials,
         [Parameter(Mandatory=$True)][string]$uri
     )
 
-    $fields = New-Object PSObject -Property @{
-        org_id = "SELECT Organization WHERE name = `"$orgName`""
-        name = $name
+    if($PSBoundParameters.ContainsKey('orgName')) {
+        $fields = New-Object PSObject -Property @{
+            org_id = "SELECT Organization WHERE name = `"$orgName`""
+            name = $name
+        }
+    } else {
+        $fields = New-Object PSObject -Property @{
+            org_id = "SELECT Organization WHERE id = `"$orgID`""
+            name = $name
+        }
     }
+
 
     # add optional parameters
     if(![String]::IsNullOrEmpty($phone)) {
