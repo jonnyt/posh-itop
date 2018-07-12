@@ -2172,6 +2172,53 @@ Function Invoke-SynchroImport {
     }
 }
 
+Function Invoke-BulkExport {
+    <#
+ .Synopsis
+  Invoke the bulk export API.
+
+ .Description
+  See https://www.itophub.io/wiki/page?id=2_2_0%3Aadvancedtopics%3Aexportdata
+
+ .Parameter expression
+  OQL query
+
+ .Parameter authName
+  Logon for the iTop web service
+
+ .Parameter authPwd
+  Password for the iTop web service
+
+ .Parameter uri
+  uri for the iTop web service
+
+  .Parameter fields
+  comma separated list of fields to return
+
+#>
+    Param(
+        [Parameter(Mandatory=$True)][string]$expression,
+        [Parameter(Mandatory=$True)][pscredential]$credential,
+        [Parameter(Mandatory=$True)][string]$uri,
+        [Parameter(Mandatory=$True)][ValidateSet("html","csv","xml","xlsx")]$format = "csv",
+        [Parameter(Mandatory=$True)][string]$fields
+    )
+
+    $encExpression = [System.Web.HttpUtility]::UrlEncode($expression)
+
+    $fullUri = "{0}?expression={1}&format={2}&login_mode={3}&fields={4}" -f $uri,$encExpression,$format,"basic",$fields
+
+    # send the web request and get the response
+    $res = Invoke-WebRequest -Method Get -Uri $fullUri -TimeoutSec 960 -UseBasicParsing -Credential $credential
+    if($res.StatusCode -eq 200) {
+        $res.Content
+    }
+    else {
+        Throw "Bulk export returned an error when running $res"
+    }
+}
+
+
 Function Invoke-SynchroExec {
     <#
  .Synopsis
