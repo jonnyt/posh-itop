@@ -2314,17 +2314,22 @@ Function GenerateAndSendRequest {
         json_data=ConvertTo-Json($requestHash) -Depth 10
     }
 
-    # Let's use the .Net JavaScript serializer, the PowerShell implementation is limited in length
-    [void][System.Reflection.Assembly]::LoadWithPartialName("System.Web.Extensions")
-    $javaScriptSerializer = New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer
-    $javaScriptSerializer.MaxJsonLength = [int]::MaxValue
-    $javaScriptSerializer.RecursionLimit = 99
-
     # Make our request to the web service
     $resp = Invoke-WebRequest -Method Post -Uri $uri -Body $requestBody -TimeoutSec 480 -DisableKeepAlive:$True -UseBasicParsing
+    $result = $null
 
-    # Deserialize the request into a PowerShell object
-    $result = $javaScriptSerializer.DeserializeObject($resp.Content)
+    if($IsWindows) {
+        # Let's use the .Net JavaScript serializer, the PowerShell implementation is limited in length
+        [void][System.Reflection.Assembly]::LoadWithPartialName("System.Web.Extensions")
+        $javaScriptSerializer = New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer
+        $javaScriptSerializer.MaxJsonLength = [int]::MaxValue
+        $javaScriptSerializer.RecursionLimit = 99
+
+        # Deserialize the request into a PowerShell object
+        $result = $javaScriptSerializer.DeserializeObject($resp.Content)
+    } else {
+        $result = $resp.Content | ConvertFrom-Json
+    }
 
     # Is there an unexpected exception?
     if($result.code -ne 0) {
@@ -2341,11 +2346,11 @@ Function GenerateAndSendRequest {
     # We can also add the key and class type of the iTop object
     foreach ($key in $result.objects.Keys) {
         $thisObject = New-Object -Type PSObject -Property $result.objects.$key.fields
-        if($result.objects.$key.key -ne $null) {
+        if($null -ne $result.objects.$key.key) {
             # using the newer API, let's add the key
             $thisObject | Add-Member Noteproperty -Name "key" -Value $result.objects.$key.key
         }
-        if($result.objects.$key.class -ne $null) {
+        if($null -ne $result.objects.$key.class) {
             # using the newer API, let's add the class
             $thisObject | Add-Member Noteproperty -Name "class" -Value $result.objects.$key.class
         }
