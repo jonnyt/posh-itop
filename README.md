@@ -2,19 +2,19 @@
 
 A PowerShell wrapper for Combodo's iTop CMDB
 
-## Requirements:
+## Requirements
 
-* POSH-MySQL
-* iTop version 2.0.2 (REST API 1.1)
+* iTop version 2.0.2 (REST API 1.1) or higher
+* Powershell Core 6 or higher
 
-## Usage:
+## Usage
 
 ```PowerShell
 Import-Module posh-itop
 Get-Command -Module posh-itop
 ```
 
-## Notes:
+## Notes
 
 If you want to use this please look at the following two cmdlets first
 
